@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "name": "Tab menu and search history",
+  "description": "View and search through open tabs and browser history.",
+  "action": {
+      "default_icon": {
+        "19": "img/logo32x.png",
+        "38": "img/logo32x.png"
+      },
+      "default_popup": "js/index.html",
+      "default_title": "React Chrome Extension"
+  },
+  "icons": {
+    "16": "img/logo32x.png",
+    "48": "img/logo64x.png",
+    "64": "img/logo64x.png",
+    "128": "img/logo128x.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "history"
+  ],
+  "content_security_policy": {}
+}

@@ -1,0 +1,145 @@
+html, body {
+  max-height: 464px;
+  overflow: hidden;
+}
+body {
+  font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  display: flex;
+}
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hide {
+  display: none;
+  visibility: hidden;
+}
+
+.show {
+  display: block;
+  visibility: visible;
+}
+
+.header {
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 20px 10px 20px;
+  z-index: 1000;
+
+  background-color: #fff;
+}
+.tabfilter {
+  padding: 17px 0 7px 0;
+}
+.tabfilter #resetButton {
+  position: absolute;
+  right: 24px;
+  top: 61px;
+  height: 25px;
+  width: 25px;
+  padding: 0;
+  background: transparent;
+  border: solid 2px #efefef;
+}
+.tabfilter input[type='text'] {
+  border: 2px solid #999;
+  padding: 5px;
+  line-height: 1.2em;
+  font-size: 100%;
+
+  width: 100%;
+}
+.tabfilter input:focus,
+.tabfilter #resetButton:focus {
+  outline: none;
+  border: solid 2px #1194F6;
+}
+h2 {
+  font-size: 1.5em;
+}
+/**
+  Content
+*/
+.tablist {
+  overflow-y: scroll !important;
+}
+.tablist ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.tablist ul li {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.tablist ul li:first-of-type {
+  border-top: none;
+}
+.tablist ul > li.window-break {
+  height: 10px;
+  background-color: #fff;
+}
+.tablist ul > li.window-break div {
+  width: 100%;
+  height: 1px;
+}
+
+.windowbox {
+  border-left: solid 3px #787878;
+  padding-left: 15px;
+  margin-top: 15px;
+}
+
+#note {
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  transition: all 0.8s;
+}
+
+.notif {
+  padding: 11px 21px 11px 7px;
+  font-size: .85em;
+  width: 100%;
+  display: block;
+  /*border-bottom: 1px solid rgba(0,0,0,0.4);*/
+}
+
+.pullright  {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
+.pullleft {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+
+.notif .subtext {
+  padding-top: 10px;
+  font-size: 85%;
+  color: #6a6b6c;
+}
+
+.notif .subtext.pullright {
+  padding-top: 4px;
+}
+
+/**
+* For accessible alerts and notifications
+*/
+.accessibilityText {
+  height: 0;
+  width: 0;
+  text-indent: -99999px;
+}
