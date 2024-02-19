@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# Tab Stacks Chrome Extension
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## View and search from a list of open tabs
 
-## Available Scripts
+Tab Stacks is a vertical tab menu that helps you find that tab you have open but can't find in the sea of windows and tabs.
 
-In the project directory, you can run:
+Tab Stacks is for the multitasker; who has a lot of open tabs and doesn't want to spend time wading through windows to find that ONE tab. You just need an easy way to navigate them by keyword as quickly as possible.
 
-### `npm start`
+### Features
+1. Lists all your open tabs and windows
+2. Find open tabs with a search field, just type to start searching
+3. If Tab Stacks can't find an open tab, it automatically searches through your history (up to the last 30 days) to see if you had a tab open
+4. You can also manually search through your history by pressing CTRL+S when searching for a tab
+5. Use the arrow keys to navigate the list of tabs / links from history
+6. Close a tab by pressing the DELETE or BACKSPACE key when the tab is highlighted
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### How to use
+Tab Stacks has been designed for keyboard usage to make finding what you're looking for as fast as possible. You can also use the mouse or touch (of course).
+1. Press **CTRL+SHIFT+K** on your keyboard or click the icon to open the Tab Stacks menu
+2. Type what you can remember of the page you're looking for
+    * Tab Stacks matches to the title OR text in the URL
+3. Press the down arrow key to start navigating through the tabs
+4. Once you're on the tab you want, press **Enter** key to open the tab in its window
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Press **ESC** (Escape) key at any time to close the menu.
 
-### `npm test`
+### Accessibility features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Screen reader accessible. Tested with JAWS, NVDA, and VoiceOver (Mac OS)
+* Tab Stacks announces the results as you type in the search field
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Privacy
+Tab Stacks is a high performance, secure, and simple extension for Chrome. Tab Stacks doesn't require you to create an account, doesn't download external files, doesn't store any information about your activity, or track you in any way.
