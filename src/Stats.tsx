@@ -1,7 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectTabCount, selectWindowCount } from './app/chromeWindowSlice';
 import './stats.css';
 
-function Stats({ tabCount, windowCount }: { tabCount: number, windowCount: number }) {
+function Stats() {
+  const tabCount = useSelector(selectTabCount);
+  const windowCount = useSelector(selectWindowCount);
   const tabLabel = (tabCount > 1) ? 'tabs' : 'tab';
   const windowLabel = (windowCount > 1) ? 'windows' : 'window';
   return (

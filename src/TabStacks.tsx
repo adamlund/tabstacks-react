@@ -1,39 +1,52 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Tablist from './Tablist';
 import Stats from './Stats';
+import Filter from './Filter';
 import { GetChromeWindows } from './chrome_commands';
+import { setWindows } from './app/chromeWindowSlice';
 import './styles.css';
 
 function TabStacks() {
-  const [ windows, setWindows ] = useState<ChromeWindow[]>([]);
+  const dispatch = useDispatch();
 
-  function countTabs() {
-    let tabCounter = 0;
-    if (windows && Array.isArray(windows) && windows.length > 0) {
-      windows.forEach((window: ChromeWindow) => {
-        tabCounter += window.tabs.length;
-      });
-    }
-    return tabCounter;
-  }
-
-  useEffect(() => {
+  const refreshTabs = () => {
     GetChromeWindows().then((windows) => {
       if (windows && Array.isArray(windows) && windows.length > 0) {
-        setWindows(windows);
+        dispatch(setWindows(windows));
       }
     });
+  };
+
+  chrome.tabs.onCreated.addListener(
+    () => {
+      refreshTabs();
+    },
+  );
+
+  chrome.tabs.onRemoved.addListener(
+    () => {
+      refreshTabs();
+    },
+  );
+
+  chrome.tabs.onUpdated.addListener(
+    () => {
+      refreshTabs();
+    },
+  );
+
+  useEffect(() => {
+    refreshTabs();
   }, []);
 
   return (
     <>
       <div className="header" key="header">
-        <Stats
-          tabCount={countTabs()}
-          windowCount={windows.length}
-        />
+        <Stats />
+        <Filter />
       </div>
-      <Tablist key="tablist" windows={windows} />
+      <Tablist key="tablist" />
     </>
   );
 }

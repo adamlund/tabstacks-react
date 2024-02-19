@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import store from './app/store';
 import TabStacks from './TabStacks';
 
 const root = document.createElement("div")
@@ -9,6 +11,8 @@ document.body.appendChild(root);
 const rootDiv = ReactDOM.createRoot(root);
 rootDiv.render(
   <React.StrictMode>
-    <TabStacks />
+    <Provider store={store}>
+      <TabStacks />
+    </Provider>
   </React.StrictMode>
 );

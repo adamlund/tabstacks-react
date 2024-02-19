@@ -1,4 +1,4 @@
-.lbltxt {
+.stats .lbltxt {
   margin-right: 20px;
   margin-left: 4px;
   color: #787878;
@@ -6,6 +6,6 @@
   text-transform: uppercase;
 }
 
-img {
+.stats img {
   margin-right: 8px;
 }

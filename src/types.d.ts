@@ -7,6 +7,11 @@ interface TabProps {
   id: number;
 }
 
+interface TabListItem {
+  type: string;
+  data: ChromeWindow | ChromeTab;
+}
+
 interface ChromeWindow {
   id: number;
   alwaysOnTop: boolean;
@@ -41,4 +46,8 @@ interface ChromeTab {
   favIconUrl: string;
   title: string;
   url: string;
+}
+
+interface TabStacksState {
+  chromeWindows: ChromeWindowsStore;
 }

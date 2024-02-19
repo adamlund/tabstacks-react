@@ -1,29 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Tab from './Tab';
+import { selectFilteredListItems } from './app/chromeWindowSlice';
 import './styles.css';
 
-interface TabListItem {
-  type: string;
-  data: ChromeWindow | ChromeTab;
-}
-
-function Tablist(props: TablistProps) {
-
-  const [ listItems, setListItems ] = useState<TabListItem[]>([]);
-
-  useEffect(() => {
-    if (props.windows && Array.isArray(props.windows) && props.windows.length > 0) {
-      const list: TabListItem[] = [];
-      props.windows.forEach((window: ChromeWindow) => {
-        list.push({ type: 'window', data: window });
-        window.tabs.forEach((tab: ChromeTab) => {
-          list.push({ type: 'tab', data: tab });
-        });
-      });
-      setListItems(list);
-    }
-  }, [props.windows]);
-
+function Tablist() {
+  const listItems = useSelector(selectFilteredListItems);
 
   return (
     <div id="open_tabs" className="tablist">
