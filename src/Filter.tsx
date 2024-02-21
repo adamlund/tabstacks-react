@@ -15,7 +15,6 @@ export default function Filter() {
         'data.url',
         'data.title',
       ]);
-      console.log('matchTabs', matchTabs);
       const filteredItems = matchTabs.filter((mt: TabListItem) => mt.type === 'tab');
       dispatch(setFilteredItems(filteredItems));
     }
@@ -23,7 +22,7 @@ export default function Filter() {
     if (filterText === '') {
       dispatch(setFilteredItems(listItems));
     }
-  }, [filterText]);
+  }, [filterText, listItems]);
 
   return (
     <div className="tabfilter">

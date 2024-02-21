@@ -16,7 +16,7 @@ function Tablist() {
           }
           else {
             return <li role="presentation">
-              <Tab {...item.data as ChromeTab} />
+              <Tab {...item.data as chrome.tabs.Tab} />
             </li>
           }
         })}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { changeTab, removeTab } from './chrome_commands';
 import './tab.css';
 
-function Tab(props: ChromeTab) {
+function Tab(props: chrome.tabs.Tab) {
   const { favIconUrl, url, title, id } = props;
   const [isActive, setActive ] = useState(false);
 
@@ -15,21 +15,28 @@ function Tab(props: ChromeTab) {
       onBlur={() => setActive(false)}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
+      data-tabid={id}
     >
       <button
         role="menuitem"
         className={`tab_primary ${(isActive) && 'isactive'}`}
-        onClick={() => changeTab(id)}
+        onClick={() => {
+          if (id) {
+            changeTab(id);
+          }
+        }}
         onKeyUp={(key) => {
           console.log('KEYUP', key);
           if (key.keyCode === 8 || key.keyCode === 46) {
-            removeTab(id);
+            if (id) {
+              removeTab(id);
+            }
           }
         }}
       >
         <div className="favicon"><img src={iconUrl} /></div>
         <div className="text-display">
-          <div className="label truncate">{title}</div>
+          <div className="label truncate" title={title}>{title}</div>
           <div
             className={`url truncate transition${(isActive && !isNewTab) ? ' active' : ''}`}
             title={url}
@@ -39,7 +46,12 @@ function Tab(props: ChromeTab) {
       {(isActive) && 
         <button
           className='close_button'
-          onClick={() => removeTab(id)}
+          onClick={() => {
+            if (id) {
+              removeTab(id);
+            }
+          }}
+          title="Remove tab"
         >
           <img src="../img/close_black_24dp.svg" />
         </button>
