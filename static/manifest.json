@@ -9,7 +9,7 @@
         "38": "img/logo32x.png"
       },
       "default_popup": "js/index.html",
-      "default_title": "React Chrome Extension"
+      "default_title": "TabStacks [CTRL+SHIFT+K]"
   },
   "icons": {
     "16": "img/logo32x.png",
