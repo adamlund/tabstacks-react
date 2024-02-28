@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "manifest_version": 3,
   "name": "Tab menu and search history",
   "description": "View and search through open tabs and browser history.",
@@ -10,6 +10,15 @@
       },
       "default_popup": "js/index.html",
       "default_title": "TabStacks [CTRL+SHIFT+K]"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "windows": "Ctrl+Shift+K",
+        "mac": "MacCtrl+Shift+K"
+      }
+    }
   },
   "icons": {
     "16": "img/logo32x.png",
