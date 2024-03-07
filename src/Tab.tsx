@@ -1,63 +1,88 @@
 import React, { useState } from 'react';
-import { changeTab, removeTab } from './chrome_commands';
+import { changeTab, setTabAudio } from './chrome_commands';
+import { DeleteTab } from './dom_commands';
 import './tab.css';
 
 function Tab(props: chrome.tabs.Tab) {
   const { favIconUrl, url, title, id } = props;
   const [isActive, setActive ] = useState(false);
 
-  const isNewTab = title === 'New Tab';
+  let iconUrl = (favIconUrl && favIconUrl.length > 1) ? favIconUrl : '../img/chrome-logo-wht.svg';
+  const isAudible = props?.audible;
+  const isMuted = props?.mutedInfo?.muted || false;
+  // const isUnloaded = props.discarded;
 
-  const iconUrl = (favIconUrl && favIconUrl.length > 1) ? favIconUrl : '../img/chrome-logo-wht.svg'
   return (
-    <div className="tab_row"
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => setActive(false)}
+    <li
+      className="tab_row"
+      role="presentation"
       data-tabid={id}
+      id={`tabcontainer-${id}`}
     >
       <button
         role="menuitem"
-        className={`tab_primary ${(isActive) && 'isactive'}`}
+        id={`tab-${id}`}
+        data-tabid={id}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+        onMouseEnter={() => setActive(true)}
+        onMouseLeave={() => setActive(false)}
+        className={`tab_primary${(isActive) ? ' isactive' : ''}`}
         onClick={() => {
           if (id) {
             changeTab(id);
           }
         }}
-        onKeyUp={(key) => {
-          console.log('KEYUP', key);
-          if (key.keyCode === 8 || key.keyCode === 46) {
-            if (id) {
-              removeTab(id);
-            }
-          }
-        }}
       >
-        <div className="favicon"><img src={iconUrl} /></div>
-        <div className="text-display">
-          <div className="label truncate" title={title}>{title}</div>
-          <div
-            className={`url truncate transition${(isActive && !isNewTab) ? ' active' : ''}`}
-            title={url}
-          >{url}</div>
+        {(isAudible || isMuted)
+          ? <button
+              className="button__audible"
+              title={(isMuted) ? 'Audio muted, click to unmute' : 'Sound playing, click to mute'}
+              aria-label={(isMuted) ? 'Audio muted, click to unmute' : 'Sound playing, click to mute'}
+              onClick={(event) => {
+                event.preventDefault()
+                event.stopPropagation();
+                if (id) {
+                  setTabAudio(id, !isMuted);
+                }
+              }}
+              >
+              <img
+                className={(isMuted) ? 'tab__img-muted' : 'tab__img-audible'}
+                src={(isMuted) ? '../img/volume_muted_w400_24.svg' : '../img/volume_w400_24.svg'}
+              />
+            </button>
+          : <div className="favicon">
+              <img className="tab__img-favicon" src={iconUrl} loading="lazy" />
+            </div>}
+        <div className="tab__text_display">
+          <div className="tab__label truncate" title={title}>{title}</div>
+            <div
+              className={`tab__url truncate ${(isActive) ? 'active' : 'transition'}`}
+              title={url}
+            >
+              {url}
+            </div>
+        </div>
+        <div>
+        {(isActive) &&
+          <button
+            className="tab__deletebutton"
+            title="Remove tab"
+            onClick={(event) => {
+              event.preventDefault()
+              event.stopPropagation();
+              if (id) {
+                DeleteTab(`${id}`);
+              }
+            }}
+          >
+            <img className="tab__img-closeicon" src="../img/close_black_24dp.svg" />
+          </button>
+        }
         </div>
       </button>
-      {(isActive) && 
-        <button
-          className='close_button'
-          onClick={() => {
-            if (id) {
-              removeTab(id);
-            }
-          }}
-          title="Remove tab"
-        >
-          <img src="../img/close_black_24dp.svg" />
-        </button>
-      }
-
-    </div>
+    </li>
   );
 
 }

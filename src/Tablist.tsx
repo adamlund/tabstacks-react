@@ -15,9 +15,7 @@ function Tablist() {
             return <li className="window-break"></li>
           }
           else {
-            return <li role="presentation">
-              <Tab {...item.data as chrome.tabs.Tab} />
-            </li>
+            return <Tab {...item.data as chrome.tabs.Tab} />
           }
         })}
       </ul>
