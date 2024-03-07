@@ -69,6 +69,7 @@ function Tab(props: chrome.tabs.Tab) {
           <button
             className="tab__deletebutton"
             title="Remove tab"
+            tabIndex={-1}
             onClick={(event) => {
               event.preventDefault()
               event.stopPropagation();
