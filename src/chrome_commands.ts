@@ -1,3 +1,10 @@
+const MSPERDAY = 86400000; //milliseconds per day
+const SEARCH_DURATION = 90; //days
+
+function searchWithinMSec(durationDats: number) {
+  return Date.now() - durationDats * MSPERDAY;
+}
+
 async function GetChromeWindows(): Promise<chrome.windows.Window[]> {
   return new Promise(resolve => {
     chrome.windows.getAll({ populate: true }, windows => {
@@ -37,14 +44,31 @@ function changeTab(tabId: number) {
   });
 }
 
-function removeTab(tabId: number) {
-  chrome.tabs.remove(tabId);
+async function removeTab(tabId: number): Promise<void> {
+  await chrome.tabs.remove(tabId);
+}
+
+async function setTabAudio(tabId: number, doMute: boolean): Promise<void> {
+  await chrome.tabs.update(tabId, {
+    muted: doMute,
+  });
+}
+
+async function PullHistory(
+  needle: string = '',
+  durationDays: number = SEARCH_DURATION,
+): Promise<chrome.history.HistoryItem[]> {
+  const queryObj = { text: needle, startTime: searchWithinMSec(durationDays), maxResults: 2500 };
+  const historyItems = await chrome.history.search(queryObj);
+  return historyItems;
 }
 
 export {
   GetTabs,
   GetCurrentWindow,
   GetChromeWindows,
+  PullHistory,
+  setTabAudio,
   removeTab,
   changeTab,
 }
