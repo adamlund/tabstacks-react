@@ -1,6 +1,6 @@
 html, body {
-  max-height: 464px;
   overflow: hidden;
+  font-size: 14px;
 }
 body {
   font-family: "Roboto Sans", Helvetica, Arial, sans-serif;
@@ -14,10 +14,18 @@ body {
   box-sizing: border-box;
 }
 
-.container {
+.tab__container {
   width: 445px;
+  max-height: 464px;
   display: flex;
   flex-direction: column;
+}
+
+.options__container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 20px;
 }
 
 .hide {
@@ -31,48 +39,44 @@ body {
 }
 
 .header {
-  top: 0;
-  left: 0;
   width: 100%;
-  padding: 20px 20px 10px 20px;
+  /* padding: 14px 20px 11px 20px; */
   z-index: 1000;
-
   background-color: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+.stats__container {
+  padding: 11px 11px 0 11px;
 }
 .tabfilter {
-  padding: 17px 0 7px 0;
+  padding: 11px 11px 0 11px;
 }
-.tabfilter #resetButton {
+.tabfilter__resetbutton {
   position: absolute;
-  right: 24px;
-  top: 61px;
-  height: 25px;
-  width: 25px;
+  display: flex;
+  right: 16px;
+  top: 59px;
   padding: 0;
+  margin: 0;
+  border: none;
   background: transparent;
-  border: solid 2px #efefef;
+}
+.tabfilter__resetbutton:hover {
+  background-color: #F5F5F5;
 }
 .tabfilter input[type='text'] {
-  border: 2px solid #999;
+  border: 2px solid #787878;
   padding: 5px;
+  border-radius: 3px;
   line-height: 1.2em;
-  font-size: 100%;
-
+  font-size: 1.2rem;
   width: 100%;
-}
-.tabfilter input:focus,
-.tabfilter #resetButton:focus {
-  outline: none;
-  border: solid 2px #1194F6;
-}
-h2 {
-  font-size: 1.5em;
 }
 /**
   Content
 */
 .tablist {
-  overflow-y: scroll !important;
+  overflow-y: auto;
 }
 .tablist ul {
   padding: 0;
@@ -85,9 +89,14 @@ h2 {
 .tablist ul li:first-of-type {
   border-top: none;
 }
+.tablist ul li:last-of-type {
+  margin-bottom: 0.5rem;
+}
 .tablist ul > li.window-break {
-  height: 10px;
+  height: 14px;
   background-color: #fff;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 2px solid rgba(0,0,0,0.1);
 }
 .tablist ul > li.window-break div {
   width: 100%;
@@ -100,40 +109,127 @@ h2 {
   margin-top: 15px;
 }
 
-#note {
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  transition: all 0.8s;
+.note {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #6a6b6c;
+  padding: 11px 11px 0 11px;
 }
 
-.notif {
-  padding: 11px 21px 11px 7px;
-  font-size: .85em;
+.note-display {
+  padding-bottom: 11px;
+}
+
+.flexcontainer {
+  display: flex;
+}
+
+.w-30 {
+  width: 30%;
+}
+.w-70 {
+  width: 70%;
+}
+.w-50 {
+  width: 50%;
+}
+.w-40 {
+  width: 40%;
+}
+.w-60 {
+  width: 60%;
+}
+.w-100 {
   width: 100%;
-  display: block;
-  /*border-bottom: 1px solid rgba(0,0,0,0.4);*/
 }
 
-.pullright  {
-  display: inline-block;
-  width: 50%;
-  text-align: right;
-}
-
-.pullleft {
-  display: inline-block;
-  width: 50%;
+.align-left {
   text-align: left;
 }
 
-.notif .subtext {
-  padding-top: 10px;
+.align-right {
+  text-align: right;
+}
+
+.subtext {
   font-size: 85%;
   color: #6a6b6c;
 }
 
-.notif .subtext.pullright {
-  padding-top: 4px;
+.stats {
+  font-size: 1rem;
+  padding-top: 6px;
 }
+
+.stats__lbltxt {
+  margin-right: 20px;
+  margin-left: 4px;
+  color: #787878;
+  text-transform: uppercase;
+}
+
+.stats__img {
+  margin-right: 8px;
+}
+
+.iconbutton-round {
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 0 #F5F5F5;
+  border: solid 1px #fff;
+}
+
+.iconbutton-round:hover {
+  background-color: #F5F5F5;
+  border: solid 1px #f5f5f5;
+}
+
+.iconbutton__image {
+  height: 24px;
+  width: 24px;
+}
+
+.iconbutton__toolbar-round {
+  height: 32px;
+  width: 32px;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 0 #F5F5F5;
+  border: solid 1px #fff;
+}
+
+.iconbutton__toolbar-round:hover {
+  background-color: #F5F5F5;
+  border: solid 1px #787878;
+}
+
+.iconbutton__toolbar__image {
+  margin-top: 2px;
+  height: 25px;
+  width: 25px;
+}
+
+.button__historysearch {
+  border-radius: 3px;
+  padding: 3px 5px;
+  cursor: pointer;
+  color: #787878;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 0 #F5F5F5;
+  border: solid 1px #fff;
+}
+.button__historysearch:hover {
+  background-color: #F5F5F5;
+  border: solid 1px #787878;
+}
+
 
 /**
 * For accessible alerts and notifications
@@ -142,4 +238,8 @@ h2 {
   height: 0;
   width: 0;
   text-indent: -99999px;
+}
+
+.use-settings {
+  background-color: #efefef;
 }
