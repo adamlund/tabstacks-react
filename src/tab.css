@@ -11,7 +11,7 @@
 }
 .tab_primary {
   display: flex;
-  padding: 11px 11px 11px 0;
+  padding: 11px 11px 11px 4px;
   margin: 0;
   color: #333;
   width: 100%;

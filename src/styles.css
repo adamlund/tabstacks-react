@@ -46,16 +46,16 @@ body {
   border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 .stats__container {
-  padding: 11px 11px 0 11px;
+  padding: 15px 15px 0 15px;
 }
 .tabfilter {
-  padding: 11px 11px 0 11px;
+  padding: 15px 15px 0 15px;
 }
 .tabfilter__resetbutton {
   position: absolute;
   display: flex;
-  right: 16px;
-  top: 59px;
+  right: 20px;
+  top: 67px;
   padding: 0;
   margin: 0;
   border: none;
@@ -114,7 +114,7 @@ body {
   flex-direction: row;
   align-items: center;
   color: #6a6b6c;
-  padding: 11px 11px 0 11px;
+  padding: 11px 15px 0 15px;
 }
 
 .note-display {
