@@ -31,30 +31,28 @@ module.exports = {
         ],
     },
     plugins: [
-        new CopyPlugin({
-            patterns: [
-                { from: "./static/manifest.json", to: "../manifest.json" },
-                { from: "./static/img", to: "../img" }
-            ],
-        }),
-        ...getHtmlPlugins(["index"]),
+      new CopyPlugin({
+          patterns: [
+              { from: "./static/manifest.json", to: "./manifest.json" },
+              { from: "./static/img", to: "./img" },
+          ],
+      }),
+      new HTMLPlugin({
+        template: "./static/index.html",
+        filename: "index.html",
+        chunks: ["index"],
+      }),
+      new HTMLPlugin({
+          template: "./static/options.html",
+          filename: "options.html",
+          chunks: ["index"],
+      }),
     ],
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        path: path.join(__dirname, "dist/js"),
-        filename: "[name].js",
+        path: path.join(__dirname, "dist"),
+        filename: "js/[name].js",
     },
 };
-
-function getHtmlPlugins(chunks) {
-    return chunks.map(
-        (chunk) =>
-            new HTMLPlugin({
-                title: "React extension",
-                filename: `${chunk}.html`,
-                chunks: [chunk],
-            })
-    );
-}
