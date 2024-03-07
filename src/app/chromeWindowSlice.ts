@@ -8,6 +8,7 @@ export interface ChromeWindowsStore {
   windowCount: number;
   tabCount: number;
   currentTab: chrome.tabs.Tab | null;
+  searchMode: 'tabs' | 'history';
 };
 
 function sortWindowsDesc(chromeWindows: chrome.windows.Window[], current: chrome.windows.Window | undefined) {
@@ -27,7 +28,7 @@ const processTabListItems = (
   const listItems: TabListItem[] = [];
   let tabCount = 0;
   let windowCount = 0;
-  console.log('process currentWindow', currentWindow);
+
   sortWindowsDesc(chromeWindows, currentWindow);
 
   chromeWindows.forEach((window: chrome.windows.Window) => {
@@ -53,6 +54,7 @@ export const chromeWindowSlice = createSlice({
     windowCount: 0,
     tabCount: 0,
     currentTab: null,
+    searchMode: 'tabs',
   } as ChromeWindowsStore,
   reducers: {
     setWindows: (state, action) => {
@@ -73,14 +75,18 @@ export const chromeWindowSlice = createSlice({
         state.filteredListItems = [...action.payload];
       }
     },
+    setSearchMode: (state, action) => {
+      state.searchMode = action.payload || 'tabs';
+    },
   },
 });
 
-export const { setWindows, setFilteredItems } = chromeWindowSlice.actions;
+export const { setWindows, setFilteredItems, setSearchMode } = chromeWindowSlice.actions;
+export const selectSearchMode = (state: TabStacksState) => state.chromeWindows.searchMode;
 export const selectTabCount = (state: TabStacksState) => state.chromeWindows.tabCount;
 export const selectWindowCount = (state: TabStacksState) => state.chromeWindows.windowCount;
 export const selectListItems = (state: TabStacksState) => state.chromeWindows.listItems;
-export const selectFilteredListItems = (state: TabStacksState) => state.chromeWindows.filteredListItems;
+export const selectFilteredListItems = (state: TabStacksState): TabListItem[] => state.chromeWindows.filteredListItems;
 export const selectRawWindows = (state: TabStacksState) => state.chromeWindows.rawWindows;
 
 export default chromeWindowSlice.reducer;
