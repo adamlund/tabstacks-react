@@ -43,13 +43,12 @@ export const searchForText = (
           .join('.*')})`,
       'i'
   );
-  console.log('searching', searchString, searchArrayAccessors, searchArray);
   return searchArray.filter(item => {
       let hasMatches = false;
       searchArrayAccessors.forEach(accessor => {
-          if (regex.test(_get(item, accessor))) {
-              hasMatches = true;
-          }
+        if (regex.test(_get(item, accessor))) {
+          hasMatches = true;
+        }
       });
       return hasMatches;
   });
