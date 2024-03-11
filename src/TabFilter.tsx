@@ -1,39 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilteredItems, selectListItems } from './app/chromeWindowSlice';
-import { searchForText } from './lib/search';
+import {
+  setFilterText,
+  selectListItems,
+  selectSearchMode,
+} from './app/chromeWindowSlice';
 
 export default function TabFilter() {
-  const [filterText, setFilterText ] = useState<string>('');
+  const [filterText, _setFilterText ] = useState<string>('');
   const listItems = useSelector(selectListItems);
   const [_filteredItems, _setfilteredItems] = useState<TabListItem[]>(listItems);
+  const mode = useSelector(selectSearchMode);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
+  const label = (mode === 'tabs') ? "Filter tabs by title or url" : 'Filter history items';
+
+  const forceFocus = () => {
+    if (inputRef.current !== null) {
+      // @ts-ignore
+      inputRef.current.focus();
+    }
+  };
+
   useEffect(() => {
-    if (filterText.length > 1) {
-      const matchTabs = searchForText(filterText, listItems, [
-        'data.url',
-        'data.title',
-      ]);
-      const filteredItems = matchTabs.filter((mt: TabListItem) => mt.type === 'tab');
-      dispatch(setFilteredItems(filteredItems));
-    }
-    // reset the tabs and windows
-    if (filterText === '') {
-      dispatch(setFilteredItems(listItems));
-    }
-  }, [filterText, listItems]);
+    forceFocus();
+  },[mode]);
 
   return (
     <div className="tabfilter">
       <input
         type="text"
         id="tabSearch"
-        placeholder="Filter tabs by title or url"
-        aria-label="Filter tabs by title or url"
+        placeholder={label}
+        aria-label={label}
         value={filterText}
-        onChange={(val) => setFilterText(val.target.value)}
+        onChange={(val) => { 
+          _setFilterText(val.target.value);
+          dispatch(setFilterText(val.target.value));
+        }}
         ref={inputRef}
         autoFocus
       />
@@ -47,11 +52,9 @@ export default function TabFilter() {
             alt="Reset search"
             aria-label="Reset search"
             onClick={() => {
-              setFilterText('');
-              if (inputRef?.current !== null) {
-                // @ts-ignore
-                inputRef.current.focus();
-              }
+              _setFilterText('');
+              dispatch(setFilterText(''));
+              forceFocus();
             }}
           />
         </button>
