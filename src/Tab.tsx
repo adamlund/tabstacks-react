@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { changeTab, setTabAudio } from './chrome_commands';
 import { DeleteTab } from './dom_commands';
-import './tab.css';
 
 function Tab(props: chrome.tabs.Tab) {
   const { favIconUrl, url, title, id } = props;
@@ -58,7 +57,7 @@ function Tab(props: chrome.tabs.Tab) {
         <div className="tab__text_display">
           <div className="tab__label truncate" title={title}>{title}</div>
             <div
-              className={`tab__url truncate ${(isActive) ? 'active' : 'transition'}`}
+              className={`tab__url truncate ${(isActive) ? 'active' : 'hidden'}`}
               title={url}
             >
               {url}

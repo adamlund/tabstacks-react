@@ -8,7 +8,7 @@ function Stats() {
   const tabLabel = (tabCount > 1) ? 'tabs' : 'tab';
   const windowLabel = (windowCount > 1) ? 'windows' : 'window';
   return (
-    <div className="stats__container flexcontainer">
+    <div className="stats__container flexcontainer flex-center-vertical">
       <div className="align-left w-70 stats flexcontainer">
         <img className="stats__img" src="../img/icon-tabs.svg" height="16" alt="Tab Count" />
         <div>{tabCount || 0}</div>
