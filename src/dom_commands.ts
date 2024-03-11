@@ -1,8 +1,8 @@
 function ArrowCommand(key: string) {
   const currentFocusedElement = document.activeElement;
-  const tabElements = document.querySelectorAll('button[id^="tab-"]');
+  const query = 'a[id^="history-"], button[id^="tab-"]';
+  const tabElements = document.querySelectorAll(query);
   const tabsArray = Array.from(tabElements);
-
   const currentIndex = tabsArray.findIndex(el => el === currentFocusedElement);
 
   if (currentIndex <= 0) {
