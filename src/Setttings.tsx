@@ -18,11 +18,11 @@ function SettingsPage() {
     <div className="settings">
       <h1>TabStacks Settings</h1>
       <p>Preferences for tab and history search view.</p>
+
       <div>
       <button
           onClick={() => {
             PullHistory('', historyLength).then((hist: chrome.history.HistoryItem[]) => {
-              console.log('pulled hist from onclick', hist.length);
               setHistoryArrSize(hist.length);
               setHistory(convertToStr(hist));
             });
