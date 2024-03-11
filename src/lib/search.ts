@@ -29,7 +29,7 @@ export const _get = (obj: Record<string, any>, opath: string): any => {
  */
 export const searchForText = (
   searchString: string,
-  searchArray: TabListItem[],
+  searchArray: any[],
   searchArrayAccessors: string[],
 ) => {
   const regex = new RegExp(
