@@ -1,5 +1,9 @@
+import {
+  DEFAULT_SEARCH_DURATION,
+  DEFAULT_HISTORY_LIMIT,
+} from "./constants";
+
 const MSPERDAY = 86400000; //milliseconds per day
-const SEARCH_DURATION = 90; //days
 
 function searchWithinMSec(durationDats: number) {
   return Date.now() - durationDats * MSPERDAY;
@@ -54,13 +58,16 @@ async function setTabAudio(tabId: number, doMute: boolean): Promise<void> {
   });
 }
 
-async function PullHistory(
+function PullHistory(
   needle: string = '',
-  durationDays: number = SEARCH_DURATION,
+  durationDays: number = DEFAULT_SEARCH_DURATION,
 ): Promise<chrome.history.HistoryItem[]> {
-  const queryObj = { text: needle, startTime: searchWithinMSec(durationDays), maxResults: 2500 };
-  const historyItems = await chrome.history.search(queryObj);
-  return historyItems;
+  const queryObj = {
+    text: needle,
+    startTime: searchWithinMSec(durationDays),
+    maxResults: DEFAULT_HISTORY_LIMIT,
+  };
+  return chrome.history.search(queryObj);
 }
 
 export {
