@@ -15,6 +15,7 @@ import {
   selectSearchMode,
   selectHistoryLoaded,
   fetchHistory,
+  fetchChromeSync,
 } from './app/chromeWindowSlice';
 
 function TabStacks() {
@@ -73,6 +74,7 @@ function TabStacks() {
   }
 
   useEffect(() => {
+    dispatch(fetchChromeSync());
     const getTabs = async () => {
       await refreshWindowsAsync();
     };
