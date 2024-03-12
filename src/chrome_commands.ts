@@ -58,14 +58,28 @@ async function setTabAudio(tabId: number, doMute: boolean): Promise<void> {
   });
 }
 
+async function readSettings(): Promise<TabStacksSyncSettings> {
+  const settings = await chrome.storage.sync.get();
+  return settings;
+}
+
+async function clearSettings(): Promise<void> {
+  await chrome.storage.sync.clear();
+}
+
+async function pushSettings(settings: TabStacksSyncSettings): Promise<void> {
+  await chrome.storage.sync.set(settings);
+}
+
 function PullHistory(
   needle: string = '',
   durationDays: number = DEFAULT_SEARCH_DURATION,
+  limit: number = DEFAULT_HISTORY_LIMIT
 ): Promise<chrome.history.HistoryItem[]> {
   const queryObj = {
     text: needle,
     startTime: searchWithinMSec(durationDays),
-    maxResults: DEFAULT_HISTORY_LIMIT,
+    maxResults: limit,
   };
   return chrome.history.search(queryObj);
 }
@@ -78,4 +92,7 @@ export {
   setTabAudio,
   removeTab,
   changeTab,
+  readSettings,
+  pushSettings,
+  clearSettings,
 }
