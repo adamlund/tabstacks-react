@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import TabStacks from './TabStacks';
-import SettingsPage from './Setttings';
+import SettingsPage from './Settings';
 import './styles.css';
 
 const isOptionsPage = (document.location.href.endsWith('options.html'));
