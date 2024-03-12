@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { changeTab, setTabAudio } from './chrome_commands';
 import { DeleteTab } from './dom_commands';
+import { selectPreferences } from './app/chromeWindowSlice';
 
 function Tab(props: chrome.tabs.Tab) {
   const { favIconUrl, url, title, id } = props;
-  const [isActive, setActive ] = useState(false);
+  const [isActive, setActive] = useState(false);
+  const prefs = useSelector(selectPreferences);
+
+  const forceURLShow = (prefs?.showURLOnTabs);
 
   let iconUrl = (favIconUrl && favIconUrl.length > 1) ? favIconUrl : '../img/chrome-logo-wht.svg';
   const isAudible = props?.audible;
@@ -57,7 +62,7 @@ function Tab(props: chrome.tabs.Tab) {
         <div className="tab__text_display">
           <div className="tab__label truncate" title={title}>{title}</div>
             <div
-              className={`tab__url truncate ${(isActive) ? 'active' : 'hidden'}`}
+              className={`tab__url truncate ${(isActive || forceURLShow) ? 'active' : 'hidden'}`}
               title={url}
             >
               {url}
