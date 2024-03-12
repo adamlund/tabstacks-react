@@ -15,3 +15,9 @@ interface TabListItem {
 interface TabStacksState {
   chromeWindows: ChromeWindowsStore;
 }
+
+interface TabStacksSyncSettings {
+  historySearchDays?: number;
+  historySearchLimit?: number;
+  showURLOnTabs?: boolean;
+}
