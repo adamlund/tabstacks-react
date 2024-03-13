@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
   "manifest_version": 3,
-  "name": "Tab menu and search history",
+  "name": "Access tabs and history in a vertical menu",
   "description": "View and search through open tabs and browser history.",
   "icons": {
     "16": "img/logo32x.png",
