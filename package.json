@@ -22,7 +22,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "watch": "webpack -w --config webpack.config.js",
-    "clean": "rm -rf ./dist"
+    "clean": "rm -rf ./dist",
+    "zip": "cd dist && zip -vr ../tabstacks.zip ./ -x '.DS_Store'"
   },
   "eslintConfig": {
     "extends": [
