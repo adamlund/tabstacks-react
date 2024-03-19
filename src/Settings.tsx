@@ -126,7 +126,7 @@ function SettingsPage() {
             <p>Changes search mode between tab and history search.</p>
           </div>
           <div className="settings__input-container">
-              {"[CTRL] + "}
+              {"[CTRL] + [SHIFT] + "}
               <select
                 className="settings__input"
                 value={searchToggleKey}
@@ -170,18 +170,14 @@ function SettingsPage() {
           </div>
         </div>
         <div className="settings-button-container flexcontainer">
-          <div className="w-50 align-left">
-            <button
-              onClick={() => savePreferences()}
-              className="settings-button"
-            >Save Settings</button>
-          </div>
-          <div className="w-50 align-right">
-            <button
-              className="settings-button"
-              onClick={async () => await resetDefaults()}
-            >Reset to Defaults</button>
-          </div>
+          <button
+            onClick={() => savePreferences()}
+            className="settings-button"
+          >Save Settings</button>
+          <button
+            className="settings-button secondary"
+            onClick={async () => await resetDefaults()}
+          >Reset to Defaults</button>
         </div>
       </div>
     </div>

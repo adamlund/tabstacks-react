@@ -58,7 +58,7 @@ function Tablist() {
                 <img className="tab__img-muted" src="../img/history_w400_24.svg" loading="lazy" />
               </div>
               <div className="tab__text_display">
-                {historyItems.length} matching items in history (CTRL+{toggleKey.toUpperCase()} to toggle)
+                {historyItems.length} matching items in history (CTRL+SHIFT+{toggleKey.toUpperCase()} to toggle)
               </div>
             </button>
           </li>

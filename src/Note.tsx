@@ -36,7 +36,7 @@ function Note() {
         <div className="w-50 align-right">
           <button
             className="button__historysearch"
-            title={`Search history [CTRL+${searchToggleKey?.toUpperCase()}]`}
+            title={`Search history [CTRL+SHIFT+${searchToggleKey?.toUpperCase()}]`}
             onClick={() => {
               dispatch(toggleSearchMode());
             }}
@@ -55,7 +55,7 @@ function Note() {
         <div className="w-40 align-right">
           <button
             className="button__historysearch"
-            title={`Search tabs [CTRL+${searchToggleKey?.toUpperCase()}]`}
+            title={`Search tabs [CTRL+SHIFT+${searchToggleKey?.toUpperCase()}]`}
             onClick={() => {
               dispatch(toggleSearchMode());
             }}

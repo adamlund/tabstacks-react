@@ -60,6 +60,7 @@ function TabStacks() {
   const keyNavTabElement = (event: KeyboardEvent, toggleKey = DEFAULT_SEARCH_TOGGLE_KEY) => {
     const { key } = event;
     const currentFocusedElement = document.activeElement;
+
     if (key && (key === 'ArrowUp' || key === 'ArrowDown')) {
       event.preventDefault();
       event.stopPropagation();
@@ -72,7 +73,10 @@ function TabStacks() {
           event.stopPropagation();
           DeleteTab(tabId);
         }
-    } else if (event.ctrlKey && key === toggleKey) {
+    } else if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      (key === toggleKey.toUpperCase() || key === toggleKey)) {
       event.preventDefault();
       event.stopPropagation();
       dispatch(toggleSearchMode());
