@@ -16,12 +16,18 @@ import {
   selectHistoryLoaded,
   fetchHistory,
   fetchChromeSync,
+  selectPreferences,
+  selectPreferencesLoaded,
 } from './app/chromeWindowSlice';
+import { DEFAULT_SEARCH_TOGGLE_KEY } from './constants';
 
 function TabStacks() {
   const dispatch = useDispatch<AppDispatch>();
   const mode = useSelector(selectSearchMode);
   const isHistoryLoaded = useSelector(selectHistoryLoaded);
+  const prefs = useSelector(selectPreferences);
+  const searchToggleKey = prefs.searchToggleKey;
+  const prefsLoaded = useSelector(selectPreferencesLoaded);
 
   async function refreshWindowsAsync() {
     const windows = await GetChromeWindows();
@@ -51,9 +57,10 @@ function TabStacks() {
   );
 
   // Keyboard interaction
-  const keyNavTabElement = (event: KeyboardEvent) => {
+  const keyNavTabElement = (event: KeyboardEvent, toggleKey = DEFAULT_SEARCH_TOGGLE_KEY) => {
     const { key } = event;
     const currentFocusedElement = document.activeElement;
+
     if (key && (key === 'ArrowUp' || key === 'ArrowDown')) {
       event.preventDefault();
       event.stopPropagation();
@@ -66,7 +73,10 @@ function TabStacks() {
           event.stopPropagation();
           DeleteTab(tabId);
         }
-    } else if (event.ctrlKey && key === 's') {
+    } else if (
+      event.ctrlKey &&
+      event.shiftKey &&
+      (key === toggleKey.toUpperCase() || key === toggleKey)) {
       event.preventDefault();
       event.stopPropagation();
       dispatch(toggleSearchMode());
@@ -78,19 +88,23 @@ function TabStacks() {
     const getTabs = async () => {
       await refreshWindowsAsync();
     };
-
-    const handleKey = (event: KeyboardEvent) => {
-      if (typeof event?.key === 'string') {
-        keyNavTabElement(event);
-      }
-    }
-    document.addEventListener('keyup', handleKey);
     getTabs();
-
-    return () => {
-      document.removeEventListener('keyup', handleKey);
-    };
   }, []);
+
+  useEffect(() => {
+    if (prefsLoaded) {
+      const handleKey = (event: KeyboardEvent) => {
+        if (typeof event?.key === 'string') {
+          keyNavTabElement(event, searchToggleKey);
+        }
+      }
+      document.addEventListener('keyup', handleKey);
+
+      return () => {
+        document.removeEventListener('keyup', handleKey);
+      };
+    }
+  }, [prefsLoaded]);
 
   useEffect(() => {
     if (mode === 'history' && !isHistoryLoaded) {

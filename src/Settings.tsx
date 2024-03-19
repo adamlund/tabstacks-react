@@ -3,14 +3,38 @@ import { pushSettings, readSettings, clearSettings } from './chrome_commands';
 import {
   DEFAULT_HISTORY_LIMIT,
   DEFAULT_SEARCH_DURATION,
+  DEFAULT_SEARCH_TOGGLE_KEY,
 } from './constants';
 import { _get } from './lib/search';
+
+interface KeyboardOption {
+  label: string;
+  value: string;
+}
+
+const possible_alpha_key_values = ['b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','r','s','t','u','w','y'];
+
+function KeyboardOptions(): KeyboardOption[] {
+  let options: KeyboardOption[] = [];
+  for (const item of possible_alpha_key_values) {
+    options.push(
+      {
+        value: item,
+        label: item.toUpperCase(),
+      }
+    );
+  }
+  return options;
+}
 
 function SettingsPage() {
   const [prefsAsRead, setPrefsAsread] = useState<TabStacksSyncSettings>({});
   const [historySearchDays, setHistorySearchDays] = useState(DEFAULT_SEARCH_DURATION);
   const [historySearchLimit, setHistorySearchLimit] = useState(DEFAULT_HISTORY_LIMIT);
+  const [searchToggleKey, setSearchToggleKey] = useState(DEFAULT_SEARCH_TOGGLE_KEY);
   const [showURLOnTabs, setShowURLOnTabs] = useState('0');
+
+  const kbOptions = KeyboardOptions();
 
   useEffect(() => {
     const getAndSetSettings = async () => {
@@ -19,6 +43,7 @@ function SettingsPage() {
       const tabURLSet = _get(prefs, 'showURLOnTabs');
       const historyDays = _get(prefs, 'historySearchDays');
       const historyLimit = _get(prefs, 'historySearchLimit');
+      const toggleKey = _get(prefs, 'searchToggleKey');
 
       setShowURLOnTabs((tabURLSet) ? '1' : '0');
       if (historyDays) {
@@ -27,6 +52,9 @@ function SettingsPage() {
       if (historyLimit) {
         setHistorySearchLimit(historyLimit);
       }
+      if (toggleKey) {
+        setSearchToggleKey(toggleKey);
+      }
     };
     getAndSetSettings();
   }, []);
@@ -34,6 +62,7 @@ function SettingsPage() {
   function resetDefaults() {
     setHistorySearchDays(DEFAULT_SEARCH_DURATION);
     setHistorySearchLimit(DEFAULT_HISTORY_LIMIT);
+    setSearchToggleKey(DEFAULT_SEARCH_TOGGLE_KEY);
     setShowURLOnTabs('0');
     clearSettings();
   }
@@ -53,6 +82,10 @@ function SettingsPage() {
         || _get(prefsAsRead, 'historySearchLimit')) {
       newPrefs.historySearchLimit = historySearchLimit;
     }
+    if (searchToggleKey !== DEFAULT_SEARCH_TOGGLE_KEY
+      || _get(prefsAsRead, 'searchToggleKey')) {
+    newPrefs.searchToggleKey = searchToggleKey;
+  }
     pushSettings(newPrefs);
   }
 
@@ -84,6 +117,25 @@ function SettingsPage() {
               <option value="0">Only on hover or focus</option>
               <option value="1">Always show URL</option>
             </select>
+          </div>
+        </div>
+        <h3>Keyboard Navigation</h3>
+        <div className='settings-group'>
+          <div className="settings-label">
+            <p>Search toggle key.</p>
+            <p>Changes search mode between tab and history search.</p>
+          </div>
+          <div className="settings__input-container">
+              {"[CTRL] + [SHIFT] + "}
+              <select
+                className="settings__input"
+                value={searchToggleKey}
+                onChange={(event) => {
+                  setSearchToggleKey(event.target.value);
+                }}
+              >
+                {kbOptions.map((opt: KeyboardOption) => <option value={opt.value}>{opt.label}</option>)}
+              </select>
           </div>
         </div>
         <h3>History Search</h3>
@@ -118,18 +170,14 @@ function SettingsPage() {
           </div>
         </div>
         <div className="settings-button-container flexcontainer">
-          <div className="w-50 align-left">
-            <button
-              onClick={() => savePreferences()}
-              className="settings-button"
-            >Save Settings</button>
-          </div>
-          <div className="w-50 align-right">
-            <button
-              className="settings-button"
-              onClick={async () => await resetDefaults()}
-            >Reset to Defaults</button>
-          </div>
+          <button
+            onClick={() => savePreferences()}
+            className="settings-button"
+          >Save Settings</button>
+          <button
+            className="settings-button secondary"
+            onClick={async () => await resetDefaults()}
+          >Reset to Defaults</button>
         </div>
       </div>
     </div>

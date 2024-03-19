@@ -7,6 +7,7 @@ import {
   selectSearchMode,
   selectFilteredHistoryItems,
   toggleSearchMode,
+  selectPreferences,
 } from './app/chromeWindowSlice';
 import { DEFAULT_HISTORY_ITEMS } from './constants';
 
@@ -16,6 +17,8 @@ function Note() {
   const fli = useSelector(selectFilteredListItems);
   const sli = useSelector(selectListItems);
   const fhi = useSelector(selectFilteredHistoryItems);
+  const prefs = useSelector(selectPreferences);
+  const searchToggleKey = prefs.searchToggleKey;
   const dispatch = useDispatch();
 
   let notifMessage = '';
@@ -33,7 +36,7 @@ function Note() {
         <div className="w-50 align-right">
           <button
             className="button__historysearch"
-            title="Search history [CTRL+S]"
+            title={`Search history [CTRL+SHIFT+${searchToggleKey?.toUpperCase()}]`}
             onClick={() => {
               dispatch(toggleSearchMode());
             }}
@@ -52,7 +55,7 @@ function Note() {
         <div className="w-40 align-right">
           <button
             className="button__historysearch"
-            title="Search tabs [CTRL+S]"
+            title={`Search tabs [CTRL+SHIFT+${searchToggleKey?.toUpperCase()}]`}
             onClick={() => {
               dispatch(toggleSearchMode());
             }}

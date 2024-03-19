@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { PullHistory, readSettings } from '../chrome_commands';
 import { searchForText } from '../lib/search';
-import { DEFAULT_SEARCH_DURATION, DEFAULT_HISTORY_LIMIT } from '../constants';
+import {
+  DEFAULT_SEARCH_DURATION,
+  DEFAULT_HISTORY_LIMIT,
+  DEFAULT_SEARCH_TOGGLE_KEY,
+} from '../constants';
 
 export interface ChromeWindowsStore {
   filterText: string;
@@ -16,6 +20,7 @@ export interface ChromeWindowsStore {
   searchMode: 'tabs' | 'history';
   historyLoaded: boolean;
   preferences: TabStacksSyncSettings;
+  preferencesLoaded: boolean;
 };
 
 function sortWindowsDesc(
@@ -92,7 +97,9 @@ const cwInitialState: ChromeWindowsStore = {
     historySearchDays: DEFAULT_SEARCH_DURATION,
     historySearchLimit: DEFAULT_HISTORY_LIMIT,
     showURLOnTabs: false,
+    searchToggleKey: DEFAULT_SEARCH_TOGGLE_KEY,
   },
+  preferencesLoaded: false,
 };
 
 export const chromeWindowSlice = createSlice({
@@ -184,9 +191,12 @@ export const chromeWindowSlice = createSlice({
         state.filteredHistoryItems = [...matchHistory];
       }
     });
-
     builder.addCase(fetchChromeSync.fulfilled, (state, action) => {
-      state.preferences = {...action.payload};
+      state.preferences = {
+        ...state.preferences,
+        ...action.payload,
+      };
+      state.preferencesLoaded = true;
     });
   },
 });
@@ -211,5 +221,6 @@ export const selectFilteredHistoryItems = (state: TabStacksState) => state.chrom
 export const selectFilterText = (state: TabStacksState): string => state.chromeWindows.filterText;
 export const selectHistoryLoaded = (state: TabStacksState): boolean => state.chromeWindows.historyLoaded;
 export const selectPreferences = (state: TabStacksState): TabStacksSyncSettings => state.chromeWindows.preferences;
+export const selectPreferencesLoaded = (state: TabStacksState): boolean => state.chromeWindows.preferencesLoaded;
 
 export default chromeWindowSlice.reducer;
