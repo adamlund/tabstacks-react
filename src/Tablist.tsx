@@ -9,7 +9,9 @@ import {
   fetchHistory,
   selectHistoryLoaded,
   selectFilteredHistoryItems,
+  selectPreferences,
 } from './app/chromeWindowSlice';
+import { DEFAULT_SEARCH_TOGGLE_KEY } from './constants';
 import { AppDispatch } from './app/store';
 import './styles.css';
 
@@ -20,6 +22,8 @@ function Tablist() {
   const historyLoaded = useSelector(selectHistoryLoaded);
   const historyItems = useSelector(selectFilteredHistoryItems);
   const [isActive, setActive] = useState<boolean>(false);
+  const prefs = useSelector(selectPreferences);
+  const toggleKey = prefs?.searchToggleKey || DEFAULT_SEARCH_TOGGLE_KEY;
   const dispatch = useDispatch<AppDispatch>();
 
   const hasFilter = (filterText && filterText !== '' && filterText.length > 1);
@@ -54,7 +58,7 @@ function Tablist() {
                 <img className="tab__img-muted" src="../img/history_w400_24.svg" loading="lazy" />
               </div>
               <div className="tab__text_display">
-                {historyItems.length} matching items in history (CTRL+S to toggle)
+                {historyItems.length} matching items in history (CTRL+{toggleKey.toUpperCase()} to toggle)
               </div>
             </button>
           </li>
