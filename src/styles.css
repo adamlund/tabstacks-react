@@ -240,6 +240,8 @@ body {
 
 .use-settings {
   background-color: #efefef;
+  overflow-y: auto !important;
+  overflow-x: auto !important;
 }
 .historylist {
   overflow-y: auto;
