@@ -1,6 +1,7 @@
 import {
   DEFAULT_SEARCH_DURATION,
   DEFAULT_HISTORY_LIMIT,
+  DEFAULT_DISPOSE_POPUP_ON_CLOSE,
 } from "./constants";
 
 const MSPERDAY = 86400000; //milliseconds per day
@@ -27,7 +28,11 @@ async function GetCurrentWindow(): Promise<chrome.windows.Window | undefined> {
   return w;
 }
 
-function changeTab(tabId: number) {
+const closePopup = () => {
+  chrome.extension.getViews({ type: "popup" }).forEach(v => v.close());
+};
+
+function changeTab(tabId: number, dispose: string) {
   chrome.tabs.get(tabId, (tab: chrome.tabs.Tab) => {
     const { id, windowId } = tab;
     if (id) {
@@ -39,7 +44,11 @@ function changeTab(tabId: number) {
             chrome.windows.update(
               windowId,
               { focused: true },
-              () => {}
+              () => {
+                if (dispose !== 'open') {
+                  closePopup();
+                }
+              }
             );
           }
         }

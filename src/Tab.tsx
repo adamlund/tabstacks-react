@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { changeTab, setTabAudio } from './chrome_commands';
 import { DeleteTab } from './dom_commands';
 import { selectPreferences } from './app/chromeWindowSlice';
+import { DEFAULT_DISPOSE_POPUP_ON_CLOSE } from './constants';
 
 function Tab(props: chrome.tabs.Tab) {
   const { favIconUrl, url, title, id } = props;
@@ -10,6 +11,8 @@ function Tab(props: chrome.tabs.Tab) {
   const prefs = useSelector(selectPreferences);
 
   const forceURLShow = (prefs?.showURLOnTabs);
+  const disposeOnClose = prefs?.disposeOnTabChange || DEFAULT_DISPOSE_POPUP_ON_CLOSE;
+  console.log('dispose on close', disposeOnClose);
 
   let iconUrl = (favIconUrl && favIconUrl.length > 1) ? favIconUrl : '../img/chrome-logo-wht.svg';
   const isAudible = props?.audible;
@@ -34,7 +37,7 @@ function Tab(props: chrome.tabs.Tab) {
         className={`tab_primary${(isActive) ? ' isactive' : ''}`}
         onClick={() => {
           if (id) {
-            changeTab(id);
+            changeTab(id, disposeOnClose);
           }
         }}
       >

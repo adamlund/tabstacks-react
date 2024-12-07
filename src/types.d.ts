@@ -21,4 +21,5 @@ interface TabStacksSyncSettings {
   historySearchLimit?: number;
   showURLOnTabs?: boolean;
   searchToggleKey?: string;
+  disposeOnTabChange?: string;
 }
