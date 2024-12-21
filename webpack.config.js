@@ -1,6 +1,13 @@
 const path = require("path");
 const HTMLPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin")
+const webpack = require("webpack");
+const fs = require("fs");
+
+// Read manifest.json
+const manifest = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, "static/manifest.json"), "utf8")
+);
 
 module.exports = {
     entry: {
@@ -31,6 +38,9 @@ module.exports = {
         ],
     },
     plugins: [
+      new webpack.DefinePlugin({
+          'process.env.MANIFEST_VERSION': JSON.stringify(manifest.version)
+      }),
       new CopyPlugin({
           patterns: [
               { from: "./static/manifest.json", to: "./manifest.json" },
