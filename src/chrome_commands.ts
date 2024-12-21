@@ -36,23 +36,15 @@ function changeTab(tabId: number, dispose: string) {
   chrome.tabs.get(tabId, (tab: chrome.tabs.Tab) => {
     const { id, windowId } = tab;
     if (id) {
-      chrome.tabs.update(
-        id,
-        { active: true, highlighted: true },
-        (t) => {
-          if (t) {
-            chrome.windows.update(
-              windowId,
-              { focused: true },
-              () => {
-                if (dispose !== 'open') {
-                  closePopup();
-                }
-              }
-            );
-          }
-        }
-      );
+      // First update the tab
+      chrome.tabs.update(id, { active: true, highlighted: true }, (t) => {
+          // Only update window focus if we want to close the popup
+          chrome.windows.update(windowId, { focused: true }, () => {
+            if (dispose !== 'open') {
+              closePopup();
+            }
+          });
+      });
     }
   });
 }
