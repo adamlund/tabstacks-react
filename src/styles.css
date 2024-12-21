@@ -426,6 +426,11 @@ body {
 }
 
 /* Settings */
+.settings-version {
+  font-size: 0.85rem;
+  margin-left: 11px;
+  color: #787878;
+}
 .settings-container {
   width: 600px;
   padding-top: 0.25rem;

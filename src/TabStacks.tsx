@@ -20,6 +20,7 @@ import {
   selectPreferencesLoaded,
 } from './app/chromeWindowSlice';
 import { DEFAULT_SEARCH_TOGGLE_KEY } from './constants';
+import { MANIFEST_VERSION } from './config';
 
 function TabStacks() {
   const dispatch = useDispatch<AppDispatch>();

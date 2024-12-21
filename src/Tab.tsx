@@ -78,8 +78,9 @@ function Tab(props: chrome.tabs.Tab) {
             title="Remove tab"
             tabIndex={-1}
             onClick={(event) => {
-              event.preventDefault()
+              event.preventDefault();
               event.stopPropagation();
+              event.currentTarget.blur();
               if (id) {
                 DeleteTab(`${id}`);
               }

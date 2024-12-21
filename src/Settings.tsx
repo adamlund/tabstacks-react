@@ -7,6 +7,7 @@ import {
   DEFAULT_DISPOSE_POPUP_ON_CLOSE,
 } from './constants';
 import { _get } from './lib/search';
+import { MANIFEST_VERSION } from './config';
 
 interface KeyboardOption {
   label: string;
@@ -111,6 +112,7 @@ function SettingsPage() {
           className="options__logo"
         />TabStacks Settings
       </h1>
+      <div className='settings-version'>Version {MANIFEST_VERSION}</div>
       <div className='settings-container'>
         <p className='settings-intro align-left'>
           Preferences for tab and history search view. Preferences are saved and synchronized. Changes made here will appear in other browsers where the TabStacks extension is installed.</p>
