@@ -39,23 +39,21 @@ function TabStacks() {
     }
   };
 
-  chrome.tabs.onCreated.addListener(
-    async () => {
-      await refreshWindowsAsync();
-    },
-  );
+  useEffect(() => {
+    const onTabsChanged = () => {
+      refreshWindowsAsync();
+    };
 
-  chrome.tabs.onRemoved.addListener(
-    async () => {
-      await refreshWindowsAsync();
-    },
-  );
+    chrome.tabs.onCreated.addListener(onTabsChanged);
+    chrome.tabs.onRemoved.addListener(onTabsChanged);
+    chrome.tabs.onUpdated.addListener(onTabsChanged);
 
-  chrome.tabs.onUpdated.addListener(
-    async () => {
-      await refreshWindowsAsync();
-    },
-  );
+    return () => {
+      chrome.tabs.onCreated.removeListener(onTabsChanged);
+      chrome.tabs.onRemoved.removeListener(onTabsChanged);
+      chrome.tabs.onUpdated.removeListener(onTabsChanged);
+    };
+  }, []);
 
   // Keyboard interaction
   const keyNavTabElement = (event: KeyboardEvent, toggleKey = DEFAULT_SEARCH_TOGGLE_KEY) => {
