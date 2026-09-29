@@ -28,6 +28,7 @@ function TabStacks() {
   const isHistoryLoaded = useSelector(selectHistoryLoaded);
   const prefs = useSelector(selectPreferences);
   const searchToggleKey = prefs.searchToggleKey;
+  const prefsTheme = prefs.theme;
   const prefsLoaded = useSelector(selectPreferencesLoaded);
 
   async function refreshWindowsAsync() {
@@ -89,6 +90,12 @@ function TabStacks() {
     };
     getTabs();
   }, []);
+
+  useEffect(() => {
+    if (prefsTheme) {
+      document.documentElement.setAttribute('data-theme', prefsTheme);
+    }
+  }, [prefsTheme]);
 
   useEffect(() => {
     if (prefsLoaded) {

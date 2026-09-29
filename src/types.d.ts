@@ -22,4 +22,5 @@ interface TabStacksSyncSettings {
   showURLOnTabs?: boolean;
   searchToggleKey?: string;
   disposeOnTabChange?: string;
+  theme?: string;
 }

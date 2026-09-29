@@ -12,7 +12,6 @@ function Tab(props: chrome.tabs.Tab) {
 
   const forceURLShow = (prefs?.showURLOnTabs);
   const disposeOnClose = prefs?.disposeOnTabChange || DEFAULT_DISPOSE_POPUP_ON_CLOSE;
-  console.log('dispose on close', disposeOnClose);
 
   let iconUrl = (favIconUrl && favIconUrl.length > 1) ? favIconUrl : '../img/chrome-logo-wht.svg';
   const isAudible = props?.audible;
