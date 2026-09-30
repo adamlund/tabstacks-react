@@ -5,6 +5,8 @@ import {
   DEFAULT_SEARCH_DURATION,
   DEFAULT_SEARCH_TOGGLE_KEY,
   DEFAULT_DISPOSE_POPUP_ON_CLOSE,
+  DEFAULT_THEME,
+  DEFAULT_SHOW_URL_ON_TABS
 } from './constants';
 import { _get } from './lib/search';
 import { MANIFEST_VERSION } from './config';
@@ -34,10 +36,16 @@ function SettingsPage() {
   const [historySearchDays, setHistorySearchDays] = useState(DEFAULT_SEARCH_DURATION);
   const [historySearchLimit, setHistorySearchLimit] = useState(DEFAULT_HISTORY_LIMIT);
   const [searchToggleKey, setSearchToggleKey] = useState(DEFAULT_SEARCH_TOGGLE_KEY);
-  const [showURLOnTabs, setShowURLOnTabs] = useState('0');
+  const [showURLOnTabs, setShowURLOnTabs] = useState(DEFAULT_SHOW_URL_ON_TABS);
   const [disposeOnTabChange, setDisposeOnTabChage] = useState<string>(DEFAULT_DISPOSE_POPUP_ON_CLOSE);
-
+  const [theme, setTheme] = useState<string>(DEFAULT_THEME);
   const kbOptions = KeyboardOptions();
+
+  useEffect(() => {
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [theme]);
 
   useEffect(() => {
     const getAndSetSettings = async () => {
@@ -48,7 +56,7 @@ function SettingsPage() {
       const historyLimit = _get(prefs, 'historySearchLimit');
       const toggleKey = _get(prefs, 'searchToggleKey');
       const disposeOnChange = _get(prefs, 'disposeOnTabChange');
-
+      const themeAsread = _get(prefs, 'theme');
       setShowURLOnTabs((tabURLSet) ? '1' : '0');
       if (historyDays) {
         setHistorySearchDays(historyDays)
@@ -62,6 +70,9 @@ function SettingsPage() {
       if (disposeOnChange) {
         setDisposeOnTabChage(disposeOnChange);
       }
+      if (themeAsread) {
+        setTheme(themeAsread);
+      }
     };
     getAndSetSettings();
   }, []);
@@ -70,8 +81,9 @@ function SettingsPage() {
     setHistorySearchDays(DEFAULT_SEARCH_DURATION);
     setHistorySearchLimit(DEFAULT_HISTORY_LIMIT);
     setSearchToggleKey(DEFAULT_SEARCH_TOGGLE_KEY);
-    setShowURLOnTabs('0');
+    setShowURLOnTabs(DEFAULT_SHOW_URL_ON_TABS);
     setDisposeOnTabChage(DEFAULT_DISPOSE_POPUP_ON_CLOSE);
+    setTheme(DEFAULT_THEME);
     clearSettings();
   }
 
@@ -99,6 +111,11 @@ function SettingsPage() {
     ) {
       newPrefs.disposeOnTabChange = disposeOnTabChange;
     }
+    if (theme !== DEFAULT_THEME
+      || _get(prefsAsRead, 'theme')
+    ) {
+      newPrefs.theme = theme;
+    }
     pushSettings(newPrefs);
   }
 
@@ -116,7 +133,7 @@ function SettingsPage() {
       <div className='settings-container'>
         <p className='settings-intro align-left'>
           Preferences for tab and history search view. Preferences are saved and synchronized. Changes made here will appear in other browsers where the TabStacks extension is installed.</p>
-        <h3>Tablist Appearance</h3>
+        <h3>Appearance</h3>
         <div className='settings-group'>
           <div className="settings-label">Show URL on tab</div>
           <div className="settings__input-container">
@@ -130,6 +147,22 @@ function SettingsPage() {
             >
               <option value="0">Only on hover or focus</option>
               <option value="1">Always show URL</option>
+            </select>
+          </div>
+        </div>
+        <div className='settings-group'>
+          <div className="settings-label">Theme</div>
+          <div className="settings__input-container">
+            <select
+              className="settings-input"
+              name="theme"
+              value={theme}
+              onChange={(event) => {
+                setTheme(event.target.value);
+              }}
+            >
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
             </select>
           </div>
         </div>

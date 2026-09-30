@@ -1,5 +1,5 @@
 {
-  "version": "2.0.3",
+  "version": "2.0.4",
   "manifest_version": 3,
   "name": "TabStacks: tab and history search",
   "description": "View and search through open tabs and browser history.",
@@ -35,6 +35,5 @@
     "tabs",
     "history",
     "storage"
-  ],
-  "content_security_policy": {}
+  ]
 }

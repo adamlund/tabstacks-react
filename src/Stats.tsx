@@ -11,10 +11,10 @@ function Stats() {
     <div className="stats__container flexcontainer flex-center-vertical">
       <div className="align-left w-70 stats flexcontainer">
         <img className="stats__img" src="../img/icon-tabs.svg" height="16" alt="Tab Count" />
-        <div>{tabCount || 0}</div>
+        <div className="stats__count">{tabCount || 0}</div>
         <div className="stats__lbltxt">{tabLabel}</div>
         <img className="stats__img" src="../img/icon-window.svg" height="16" alt="Window Count" />
-        <div>{windowCount || 0}</div>
+        <div className="stats__count">{windowCount || 0}</div>
         <div className="stats__lbltxt">{windowLabel}</div>
       </div>
       <div className="align-right w-30">

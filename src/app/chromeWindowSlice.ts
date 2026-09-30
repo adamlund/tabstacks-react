@@ -5,6 +5,7 @@ import {
   DEFAULT_SEARCH_DURATION,
   DEFAULT_HISTORY_LIMIT,
   DEFAULT_SEARCH_TOGGLE_KEY,
+  DEFAULT_THEME,
 } from '../constants';
 
 export interface ChromeWindowsStore {
@@ -98,6 +99,7 @@ const cwInitialState: ChromeWindowsStore = {
     historySearchLimit: DEFAULT_HISTORY_LIMIT,
     showURLOnTabs: false,
     searchToggleKey: DEFAULT_SEARCH_TOGGLE_KEY,
+    theme: DEFAULT_THEME,
   },
   preferencesLoaded: false,
 };

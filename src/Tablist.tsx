@@ -72,10 +72,12 @@ function Tablist() {
       <ul>
         {displayItems.map((item: TabListItem) => {
           if (item.type === 'window') {
-            return <li className="window-break"></li>
+            const windowData = item.data as chrome.windows.Window;
+            return <li className="window-break" key={`window-${windowData.id}`}></li>
           }
           else {
-            return <Tab {...item.data as chrome.tabs.Tab} />
+            const tabData = item.data as chrome.tabs.Tab;
+            return <Tab {...tabData} key={`tab-${tabData.id}`} />
           }
         })}
       </ul>
